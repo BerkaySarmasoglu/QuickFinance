@@ -1,7 +1,36 @@
+"use client";
+import React, { useState } from 'react';
 import Image from "next/image";
 
-export default function Home() {
-  return (
+interface Share {
+  id: string;
+  symbol: string;
+  name: string;
+  price: number;
+  change: number;
+  isSaved: boolean;
+}
+
+export default function QuickFinance() {
+
+  const [allShares, setAllShares] = useState<Share[]>([
+    {id: '1', symbol: 'THYAO', name: 'Türk Hava Yolları', price: 285.50, change: 2.4, isSaved: true },
+    {id: '2', symbol: 'PGSUS', name: 'Pegasus Hava Yolları', price: 177.30, change: -0.95, isSaved: false},
+    {id: '3', symbol: 'ASELS', name: 'Aselsan', price: 58.30, change: 4.8, isSaved: false },
+    {id: '4', symbol: 'BTC', name: 'Bitcoin', price: 65000, change: 1.5, isSaved: false },
+    {id: '5', symbol: 'SAHOL', name: 'Sabancı Holding', price: 94.90, change: -0.73, isSaved: false},
+    {id: '6', symbol: 'TOASO', name: 'TOFAŞ', price: 310.50, change: 1.55, isSaved: true},
+    {id: '7', symbol: 'SISE', name: 'Şişecam', price: 41.58, change: -1.00, isSaved: false},
+    {id: '8', symbol: 'EMPAE', name: 'Empa Elektronik Sanayi Ve Ticaret AS', price: 37.76, change:9.96, isSaved: true},
+    {id: '9', symbol: 'GENKM', name: 'Gentas Kimya Sanayi ve Ticaret Pazarlama AS', price: 15.94, change: -9.99, isSaved: true},
+    {id: '10', symbol: 'BIMAS', name: 'BİM', price: 707.00, change: -0.21, isSaved: false}
+  ]);
+
+  const savedShares = allShares.filter(s => s.isSaved);
+  const topGainers = [...allShares].sort((a, b) => b.change - a.change).slice(0, 4);
+
+
+return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
@@ -62,4 +91,5 @@ export default function Home() {
       </main>
     </div>
   );
+
 }

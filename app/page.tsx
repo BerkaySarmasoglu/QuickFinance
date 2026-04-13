@@ -29,6 +29,16 @@ export default function QuickFinance() {
   const savedShares = allShares.filter(s => s.isSaved);
   const topGainers = [...allShares].sort((a, b) => b.change - a.change).slice(0, 4);
 
+  // CRUD
+  const toggleSave = (id: string) => {
+    setAllShares(allShares.map(share => 
+      share.id === id ? { ...share, isSaved: !share.isSaved } : share
+    ));
+  };
+  
+  const removeShare = (id: string) => {
+    setAllShares(allShares.filter(share => share.id !== id));
+  };
 
 return (
     <div className="min-h-screen bg-slate-900 text-slate-100 p-4 md:p-8 font-sans">

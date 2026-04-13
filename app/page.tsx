@@ -1,15 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import Image from "next/image";
-
-interface Share {
-  id: string;
-  symbol: string;
-  name: string;
-  price: number;
-  change: number;
-  isSaved: boolean;
-}
+import {ShareForm} from "@/components/ShareForm";
+import {Share} from "@/interfaces/Share";
 
 export default function QuickFinance() {
 
@@ -35,7 +28,7 @@ export default function QuickFinance() {
       share.id === id ? { ...share, isSaved: !share.isSaved } : share
     ));
   };
-  
+
   const removeShare = (id: string) => {
     setAllShares(allShares.filter(share => share.id !== id));
   };

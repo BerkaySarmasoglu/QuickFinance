@@ -37,6 +37,9 @@ return (
           <h1 className="text-3xl font-bold text-blue-400">Quick Finance</h1>
           <p className="text-slate-400 text-sm">Canlı Piyasa Takibi</p>
         </div>
+        <button className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-semibold transition">
+          + Yeni Hisse Ekle (Create)
+        </button>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -72,6 +75,7 @@ return (
                     <th className="p-4">Sembol</th>
                     <th className="p-4">Fiyat</th>
                     <th className="p-4">Değişim</th>
+                    <th className="p-4 text-right">İşlem</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700">
@@ -81,6 +85,12 @@ return (
                       <td className="p-4">₺{share.price}</td>
                       <td className={`p-4 ${share.change > 0 ? 'text-green-400' : 'text-red-400'}`}>
                         %{share.change}
+                      </td>
+                      <td className="p-4 text-right space-x-3">
+                        <button onClick={() => toggleSave(share.id)} className="text-blue-400 hover:underline">
+                          {share.isSaved ? 'Takibi Bırak' : 'Kaydet'}
+                        </button>
+                        <button onClick={() => removeShare(share.id)} className="text-red-500 hover:text-red-300">Sil</button>
                       </td>
                     </tr>
                   ))}
@@ -105,7 +115,7 @@ return (
                   </div>
                   <div className="text-right">
                     <p className="font-mono">₺{share.price}</p>
-                    
+                    <button onClick={() => toggleSave(share.id)} className="text-[10px] text-red-400 uppercase tracking-wider">Kaldır</button>
                   </div>
                 </div>
               ))}

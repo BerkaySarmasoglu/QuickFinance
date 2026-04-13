@@ -19,6 +19,20 @@ export default function QuickFinance() {
     {id: '10', symbol: 'BIMAS', name: 'BİM', price: 707.00, change: -0.21, isSaved: false}
   ]);
 
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const addShare = (formData: { symbol: string; price: number; change: number }) => {
+    const newEntry: Share = {
+      id: Date.now().toString(),
+      symbol: formData.symbol.toUpperCase(),
+      name: `${formData.symbol.toUpperCase()} A.Ş.`, // default name
+      price: formData.price,
+      change: formData.change, 
+      isSaved: false
+    };
+    setAllShares([newEntry, ...allShares]);
+    setIsFormOpen(false);
+  };
+  
   const savedShares = allShares.filter(s => s.isSaved);
   const topGainers = [...allShares].sort((a, b) => b.change - a.change).slice(0, 4);
 
@@ -40,11 +54,19 @@ return (
           <h1 className="text-3xl font-bold text-blue-400">Quick Finance</h1>
           <p className="text-slate-400 text-sm">Canlı Piyasa Takibi</p>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-semibold transition">
-          + Yeni Hisse Ekle (Create)
-        </button>
+          <button 
+    onClick={() => setIsFormOpen(!isFormOpen)} // Open/Closed when button pressed
+    className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-semibold transition"
+  >
+            {isFormOpen ? 'Kapat' : '+ Yeni Hisse Ekle'}
+          </button>
       </header>
-
+      {isFormOpen && (
+        <div className="mb-8 p-6 bg-slate-800 rounded-xl border border-blue-500/50 shadow-xl">
+          <h2 className="text-lg font-bold mb-4">Yeni Varlık Ekle</h2>
+          <ShareForm onAdd={addShare} /> 
+        </div>
+      )}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* SOL KOLON: Top Gainers & All Shares */}
